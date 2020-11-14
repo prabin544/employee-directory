@@ -44,18 +44,11 @@
   z-index: 9999; /*this will keep the icon appearing all time, even when on input::focus*/
 }
 
-.container {
-  display: flex;
-  flex-wrap: wrap;
-}
 .card{
   padding: 20px;
   margin: 10px;
 }
-.img-container{
-  max-width:100%;
-  max-height:100%;
-}
+
 .form-control{
   width: 50%;
 }

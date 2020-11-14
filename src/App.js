@@ -1,5 +1,8 @@
 import './App.css';
 import {ListGroup, Form, Card} from "react-bootstrap";
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import employee from './employee.json';
 import React, {useEffect, useState} from "react";
 
@@ -7,10 +10,8 @@ import React, {useEffect, useState} from "react";
 function App() {
   
   const [name, setName] = useState("");
-  const [employeeData, setEmployeeData] = useState([]);
-  const [sortedEmployee, setsortedEmployee] = useState([])
-  const [sortType, setSortType] = useState([]);
-
+  let [employeeData, setEmployeeData] = useState([]);
+  
   useEffect(() => {
     let temp=employee.filter((e)=>
       e.name === name
@@ -35,60 +36,59 @@ function App() {
     let sorted;
     switch (type.target.value) {
       case "name":
-        sorted = employee.sort((a, b) => a.name.localeCompare(b.name));
+        sorted = [...employeeData].sort((a, b) => a.name.localeCompare(b.name));
         break;
       case "occupation":
-        sorted = employee.sort((a, b) => a.occupation.localeCompare(b.occupation));
+        sorted = [...employeeData].sort((a, b) => a.occupation.localeCompare(b.occupation));
         break;
       default:
         break;
     }
-    
-    console.log(sorted);
-    setsortedEmployee(sorted);
-    
+    setEmployeeData(sorted);
+   
   };
 
   return (
     <div className="App">
-      <h2>Employee Directory</h2>
-      <div className="row">
-        <div className col-6>
+      <h2>Employee Directory</h2><br />
+      <Container>
+      <Row>
+        <Col md={5}>
           <Form >
             <Form.Group>
               <Form.Control 
               value={name}
               type="text" 
-              placeholder="Enter employee name "
+              placeholder="Search by employee name "
               name="name"
               onChange={(e)=>handleSubmit(e)} 
               />
             </Form.Group>
           </Form>
-        </div>
-        <div className col-3>
-          <span>Sort By</span>
-          <select onClick={(e)=>sortArray(e)}>
-            <option></option>
+        </Col>
+        <Col md={{ span: 5, offset: 2 }}>
+          <select onChange={(e)=>{sortArray(e)}}>
+            <option >Sort By</option>
             <option  value="name">Name</option>
             <option  value="occupation">Occupation</option>
           </select>
-        </div>
-      </div>
-        <div className="container">
-          {employeeData.map((employee, i) => (
-            <Card key={i} style={{ width: '14rem' }}>
-              <div className="img-container">
-                <Card.Img variant="top" src={employee.image} />
-              </div>
-                <ListGroup className="content" variant="flush">
-                  <ListGroup.Item>Name: {employee.name}</ListGroup.Item>
-                  <ListGroup.Item>Occupation: {employee.occupation}</ListGroup.Item>
-                </ListGroup>
-              
-            </Card>
-           ))}
-        </div>  
+        </Col>
+      </Row>
+      <Row>
+        {console.log(employeeData)}
+        {employeeData.map((employee, i) => (
+          <Card key={i} style={{ width: '14rem' }}>
+            <div className="img-container">
+              <Card.Img variant="top" src={employee.image} />
+            </div>
+              <ListGroup className="content" variant="flush">
+                <ListGroup.Item>Name: {employee.name}</ListGroup.Item>
+                <ListGroup.Item>{employee.occupation}</ListGroup.Item>
+              </ListGroup>
+          </Card>
+          ))}
+      </Row>
+      </Container>
       </div>
   );
 }
