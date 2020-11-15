@@ -4,3 +4,7 @@ Users will be able to search an employee by exactly searching for emplyee nam ei
 Users will be also able to sort employee by Name and occupation.
 
 ![Alt text](/public/img/ss.PNG?raw=true "directory")  
+
+## Links
+
+[Link to Deployed App](https://prabin544.github.io/employee-directory/)
